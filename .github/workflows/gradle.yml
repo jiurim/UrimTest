@@ -56,7 +56,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESSD_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
-      run: |
+      run: 
         aws deploy create-deployment
           --application-name negoTest
           --deployment-group-name nego-group 
