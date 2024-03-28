@@ -60,6 +60,6 @@ jobs:
         aws deploy create-deployment
           --application-name negoTest
           --deployment-group-name nego-group 
-          --region ap-northeast-2
+          --file-exists-behavior OVERWRIT
           --s3-location bucket=negotest-deploy,bundleType=zip,key=negotest.zip
-          --file-exists-behavior OVERWRITE
+          --region ap-northeast-2
