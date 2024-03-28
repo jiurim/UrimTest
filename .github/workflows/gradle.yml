@@ -54,7 +54,7 @@ jobs:
      # Deploy
     - name: Deploy
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESSD_KEY }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
       run: 
         aws deploy create-deployment
