@@ -15,7 +15,7 @@ public class KimjinohApplication {
 
 	@GetMapping(value = "/")
 	public String doGetHelloWorld() {
-		return "Hello World";
+		return "Hello World!";
 	}
 
 }
