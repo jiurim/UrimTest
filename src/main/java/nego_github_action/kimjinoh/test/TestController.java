@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestController {
     @GetMapping(value = "/")
 	public String doGetHelloWorld() {
-		return "왜 안될까";
+		return "진짜 개 그지같네 드디어";
 	}
 
     @GetMapping(value = "/nice")
