@@ -1,4 +1,4 @@
-package nego_github_action.kimjinoh;
+/*package nego_github_action.kimjinoh;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,4 +13,4 @@ public class KimjinohApplication {
 	}
 
 
-}
+}*/
