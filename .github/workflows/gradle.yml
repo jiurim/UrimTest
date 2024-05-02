@@ -41,7 +41,7 @@ jobs:
     - name: Copy appspec.yml
       run: cp appspec.yml ./deploy
       
-    # script files 복사
+     # script files 복사
     - name: Copy script
       run: cp ./scripts/*.sh ./deploy
 
