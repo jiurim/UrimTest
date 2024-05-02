@@ -1,19 +1,17 @@
 #!/usr/bin/env bash
 
-PROJECT_ROOT="/home/ec2-user/apps/spring-practice"
-JAR_FILE="$PROJECT_ROOT/spring-webapp.jar"
+REPOSITORY=/home/ubuntu/app
 
-DEPLOY_LOG="$PROJECT_ROOT/deploy.log"
+echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
-TIME_NOW=$(date +%c)
+CURRENT_PID=$(pgrep -fla java | grep hayan | awk '{print $1}')
 
-# 현재 구동 중인 애플리케이션 pid 확인
-CURRENT_PID=$(pgrep -f $JAR_FILE)
+echo "현재 구동 중인 애플리케이션 pid: $CURRENT_PID"
 
-# 프로세스가 켜져 있으면 종료
-if [ -z $CURRENT_PID ]; then
-  echo "$TIME_NOW > 현재 실행중인 애플리케이션이 없습니다" >> $DEPLOY_LOG
+if [ -z "$CURRENT_PID" ]; then
+  echo "현재 구동 중인 애플리케이션이 없으므로 종료하지 않습니다."
 else
-  echo "$TIME_NOW > 실행중인 $CURRENT_PID 애플리케이션 종료 " >> $DEPLOY_LOG
+  echo "> kill -15 $CURRENT_PID"
   kill -15 $CURRENT_PID
+  sleep 5
 fi
