@@ -72,3 +72,14 @@ jobs:
           --file-exists-behavior OVERWRITE
           --s3-location bucket=negotest-deploy,bundleType=zip,key=negotest.zip
           --region ap-northeast-2
+
+    #DB
+    - name : Setup MySQL
+      uses: samin/mysql-action@v1
+      with:
+        host port: 3306
+        container port: 3306
+        character set server: 'utf-8'
+        mysql database: 'Daedongje'
+        mysql user: 'root'
+        mysql password: ${{ secrets.MYSQL_PASSWORD }}
