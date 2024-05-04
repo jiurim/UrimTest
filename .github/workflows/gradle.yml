@@ -23,7 +23,7 @@ jobs:
       with:
         java-version: '11'
         distribution: 'temurin'
-        
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     
@@ -83,3 +83,32 @@ jobs:
         mysql database: 'manager'
         mysql user: 'root'
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
+
+    #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
+    - name : make application.properties
+      if: github.ref == 'refs/head/main'
+      run: cd ./src/main/resources
+
+        if [ ! -f application.yml ]; then
+        touch ./application.yml
+        fi
+        
+        # GitHub Actions에서 설정한 값을 base64 디코딩하여 application.yml 파일에 쓰기
+        echo "copy properties"
+        echo "${{ secrets.MAKE_APPLICATION }}" | base64 --decode > ./application.properties
+
+
+    - name : make apple key.p8 file
+      if : contains(github.ref, 'release')
+      run :
+          # spring의 resources 경로로 이동
+          mkdir ./src/main/resources/key
+          cd ./src/main/resources/key
+          
+          ls -al
+          touch ./AuthKey.p8
+          
+           # GitHub-Actions에서 설정한 값 파일에 쓰기
+          echo "copy APPLE_SECRET_KEY"
+          echo "${{ secrets.APPLE_SECRET_KEY }}" > ./AuthKey.p8
