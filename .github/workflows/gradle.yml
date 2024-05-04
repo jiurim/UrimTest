@@ -17,7 +17,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    
+
     - name: Set up JDK 11
       uses: actions/setup-java@v2
       with:
@@ -26,22 +26,22 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    
+
     - name: Build with Gradle
       run: ./gradlew clean build
 
        # 디렉토리 생성
     - name: Make Directory
       run: mkdir -p deploy
-        
+
     # Jar 파일 복사
     - name: Copy Jar
       run: cp ./build/libs/*.jar ./deploy
-     
+
     # appspec.yml 파일 복사
     - name: Copy appspec.yml
       run: cp appspec.yml ./deploy
-      
+
      # script files 복사
     - name: Copy script
       run: cp ./scripts/*.sh ./deploy
@@ -65,7 +65,7 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.CICD_ACCESS_KEY }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.CICD_SECRET_KEY }}
-      run: 
+      run:
         aws deploy create-deployment
           --application-name negoTest
           --deployment-group-name nego-group 
@@ -84,31 +84,26 @@ jobs:
         mysql user: 'root'
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
-
-    #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
-    - name : make application.properties
-      if: github.ref == 'refs/head/main'
-      run: cd ./src/main/resources
-
-        if [ ! -f application.yml ]; then
-        touch ./application.yml
-        fi
+      #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
+    - name : Make application.properties
+      if : github.ref == 'refs/heads/main'
+      run : |
+        cd ./src/main/resources
         
-        # GitHub Actions에서 설정한 값을 base64 디코딩하여 application.yml 파일에 쓰기
-        echo "copy properties"
-        echo "${{ secrets.MAKE_APPLICATION }}" | base64 --decode > ./application.properties
+        if [ ! -f application.properties ]; then
+          touch ./application.properties
+        fi
 
+        echo "Copy properties"
+        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./application.properties
 
-    - name : make apple key.p8 file
+    - name : Make apple key.p8 file
       if : contains(github.ref, 'release')
-      run :
-          # spring의 resources 경로로 이동
-          mkdir ./src/main/resources/key
-          cd ./src/main/resources/key
-          
-          ls -al
-          touch ./AuthKey.p8
-          
-           # GitHub-Actions에서 설정한 값 파일에 쓰기
-          echo "copy APPLE_SECRET_KEY"
-          echo "${{ secrets.APPLE_SECRET_KEY }}" > ./AuthKey.p8
+      run : |
+        mkdir -p ./src/main/resources/key
+        cd ./src/main/resources/key
+        
+        touch ./AuthKey.p8
+
+        echo "Copy APPLE_SECRET_KEY"
+        echo "${{ secrets.APPLE_SECRET_KEY }}" > ./AuthKey.p8
