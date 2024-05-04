@@ -39,13 +39,13 @@ dependencies {
 	}
 }
 
-test {
-	useJUnitPlatform()
-}
-
-/*tasks.named('test') {
+/*test {
 	useJUnitPlatform()
 }*/
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
 
 jar {
     enabled = false
