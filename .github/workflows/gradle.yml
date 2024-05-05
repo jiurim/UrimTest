@@ -34,14 +34,11 @@ jobs:
     - name: Make application.properties
       if: github.ref == 'refs/heads/main'
       run:
-        cd ./src/main/resources
-
-        if [ ! -f application.properties ]; then
-        touch ./application.properties
+        if [ ! -f ./src/main/resources/application.properties ]; then
+        touch ./src/main/resources/application.properties
         fi
-
         echo "Copy properties"
-        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./application.properties
+        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
 
     - name: Make properties key.p8 file
       if: contains(github.ref, 'main')
