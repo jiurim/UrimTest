@@ -28,9 +28,14 @@ jobs:
     - name: make application.properties
       if: contains(github.ref, 'main')
       run: |
-        mkdir -p ./src/main/resources # resources 폴더 생성하는데 미리 있어도 오류가 나지않게 -p를 붙임
-        cd ./src/main/resources # resources 폴더로 이동.
-        touch ./application.properties # application.properties 생성.
+        # resources 폴더 생성하는데 미리 있어도 오류가 나지않게 -p를 붙임
+        mkdir kimjinoh/src/main/resources 
+        
+        # resources 폴더로 이동.
+        cd ./src/main/resources 
+        
+        # application.properties 생성.
+        touch ./application.properties 
         
         echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
       shell: bash
