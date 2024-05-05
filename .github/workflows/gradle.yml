@@ -35,7 +35,7 @@ jobs:
 
     - name: Make properties key.p8 file
       if: contains(github.ref, 'main')
-      run:
+      run: |
         mkdir -p ./src/main/resources/key
         cd ./src/main/resources/key
 
@@ -53,7 +53,7 @@ jobs:
         container port: 3306
         character set server: 'utf-8'
         mysql database: 'manager'
-        mysql user: 'root'
+        mysql user: 'kimjinoh_urim'
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
 
     - name: Grant execute permission for gradlew
