@@ -39,6 +39,7 @@ jobs:
         fi
         echo "Copy properties"
         echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
+      shell: bash
 
     - name: Make properties key.p8 file
       if: contains(github.ref, 'main')
@@ -50,6 +51,7 @@ jobs:
 
         echo "Copy APPLICATION"
         echo "${{ secrets.APPLICATION }}" > ./AuthKey.p8
+      shell: bash
 
        # 디렉토리 생성
     - name: Make Directory
