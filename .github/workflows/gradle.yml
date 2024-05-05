@@ -28,9 +28,6 @@ jobs:
     - name: make application.properties
       if: contains(github.ref, 'main')
       run: |
-        # resources 폴더 생성
-        mkdir -p src/main/resources
-        
         # resources 폴더로 이동.
         cd src/main/resources
         
