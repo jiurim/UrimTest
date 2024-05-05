@@ -34,7 +34,7 @@ jobs:
       run: |
         mkdir ./src/main/resources # resources 폴더 생성
         cd ./src/main/resources # resources 폴더로 이동
-        touch ./application.properties # application.yml 생성
+        touch ./application.properties # application.properties 생성
         
         echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
       shell: bash
