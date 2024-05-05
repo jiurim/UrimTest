@@ -36,7 +36,9 @@ jobs:
       shell: bash
 
     - name : deliver application.properties
-      run : echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
+      run: |
+        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
+        shell: bash
       shell: bash
 
     - name: Make properties key.p8 file
