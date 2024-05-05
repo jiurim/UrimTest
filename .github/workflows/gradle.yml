@@ -29,7 +29,7 @@ jobs:
       if: contains(github.ref, 'main')
       run: |
         # resources 폴더 생성하는데 미리 있어도 오류가 나지않게 -p를 붙임
-        mkdir kimjinoh/src/main/resources 
+        mkdir ./src/main/resources 
         
         # resources 폴더로 이동.
         cd ./src/main/resources 
