@@ -30,6 +30,30 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build
 
+      #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
+    - name: Make application.properties
+      if: github.ref == 'refs/heads/main'
+      run:
+        cd ./src/main/resources
+
+        if [ ! -f application.properties ]; then
+        touch ./application.properties
+        fi
+
+        echo "Copy properties"
+        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./application.properties
+
+    - name: Make properties key.p8 file
+      if: contains(github.ref, 'main')
+      run:
+        mkdir -p ./src/main/resources/key
+        cd ./src/main/resources/key
+
+        touch ./AuthKey.p8
+
+        echo "Copy APPLICATION"
+        echo "${{ secrets.APPLICATION }}" > ./AuthKey.p8
+
        # 디렉토리 생성
     - name: Make Directory
       run: mkdir -p deploy
@@ -83,27 +107,3 @@ jobs:
         mysql database: 'manager'
         mysql user: 'root'
         mysql password: ${{ secrets.MYSQL_PASSWORD }}
-
-      #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
-    - name : Make application.properties
-      if : github.ref == 'refs/heads/main'
-      run :
-        cd ./src/main/resources
-        
-        if [ ! -f application.properties ]; then
-          touch ./application.properties
-        fi
-
-        echo "Copy properties"
-        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./application.properties
-
-    - name : Make properties key.p8 file
-      if : contains(github.ref, 'main')
-      run :
-        mkdir -p ./src/main/resources/key
-        cd ./src/main/resources/key
-        
-        touch ./AuthKey.p8
-
-        echo "Copy APPLICATION"
-        echo "${{ secrets.APPLICATION }}" > ./AuthKey.p8
