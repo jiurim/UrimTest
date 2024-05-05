@@ -30,7 +30,6 @@ jobs:
       run: |
         mkdir -p ./src/main/resources # resources 폴더 생성하는데 미리 있어도 오류가 나지않게 -p를 붙임
         cd ./src/main/resources # resources 폴더로 이동.
-        ls -al
         touch ./application.properties # application.properties 생성.
         
         echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
