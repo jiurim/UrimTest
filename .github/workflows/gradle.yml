@@ -28,16 +28,15 @@ jobs:
     - name: make application.properties
       if: contains(github.ref, 'main')
       run: |
-        # resources 폴더로 이동.
-        cd src/main/resources
-        
-        ls -al
+        # resources 폴더 생성
+        mkdir ./src/main/resources |
         
         # application.properties 생성.
-        touch application.properties
-        
-        echo "copy properties"
-        echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
+        touch ./src/main/resources/application.properties
+      shell: bash
+
+    - name : deliver application.properties
+      run : echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
       shell: bash
 
     - name: Make properties key.p8 file
