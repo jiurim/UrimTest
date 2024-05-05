@@ -25,11 +25,16 @@ jobs:
         distribution: 'temurin'
 
       #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
-    - name: Make application.properties
+    - name: make application.yml
+      if: |
+        contains(github.ref, 'main') ||
+        contains(github.ref, 'develop')
+        (! -f ./src/main/resources/application.properties)
+
       run: |
-        mkdir ./src/main/resources
-        cd ./src/main/resources
-        touch ./src/main/resources/application.properties
+        mkdir ./src/main/resources # resources 폴더 생성
+        cd ./src/main/resources # resources 폴더로 이동
+        touch ./application.properties # application.yml 생성
         
         echo "${{ secrets.APPLICATION }}" | base64 --decode > ./src/main/resources/application.properties
       shell: bash
