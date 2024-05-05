@@ -24,12 +24,6 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
 
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-
-    - name: Build with Gradle
-      run: ./gradlew clean build
-
       #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
     - name: Make application.properties
       if: github.ref == 'refs/heads/main'
@@ -52,6 +46,23 @@ jobs:
         echo "Copy APPLICATION"
         echo "${{ secrets.APPLICATION }}" > ./AuthKey.p8
       shell: bash
+
+    #DB
+    - name: Setup MySQL
+      uses: samin/mysql-action@v1
+      with:
+        host port: 3306
+        container port: 3306
+        character set server: 'utf-8'
+        mysql database: 'manager'
+        mysql user: 'root'
+        mysql password: ${{ secrets.MYSQL_PASSWORD }}
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew clean build
 
        # 디렉토리 생성
     - name: Make Directory
@@ -95,14 +106,3 @@ jobs:
           --file-exists-behavior OVERWRITE
           --s3-location bucket=negotest-deploy,bundleType=zip,key=negotest.zip
           --region ap-northeast-2
-
-    #DB
-    - name : Setup MySQL
-      uses: samin/mysql-action@v1
-      with:
-        host port: 3306
-        container port: 3306
-        character set server: 'utf-8'
-        mysql database: 'manager'
-        mysql user: 'root'
-        mysql password: ${{ secrets.MYSQL_PASSWORD }}
