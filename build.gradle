@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	runtimeOnly 'mysql:mysql-connector-java:8.0.26'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -40,9 +40,9 @@ dependencies {
 	useJUnitPlatform()
 }*/
 
-tasks.named('test') {
+/*tasks.named('test') {
 	useJUnitPlatform()
-}
+}*/
 
 jar {
     enabled = false
