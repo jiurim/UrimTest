@@ -27,6 +27,7 @@ jobs:
       #ignore에 담긴 application을 github가 추적을 못하므로 새롭게 생성
     - name: Make application.properties
       run: |
+        mkdir ./src/main/resources
         cd ./src/main/resources
         touch ./src/main/resources/application.properties
         
